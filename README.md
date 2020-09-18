@@ -2,7 +2,7 @@
 Colourful & robust configuration files and utilities for Mac, Linux and BSD. Installation is done with a simple command:
 
 ```sh
-curl -L https://git.io/pmdot | sh
+curl -L https://git.io/JU0LL | sh
 ```
 
 The short URL expands to GitHub-hosted `install.sh`, which can be easily audited.
@@ -13,7 +13,7 @@ The short URL expands to GitHub-hosted `install.sh`, which can be easily audited
     - Optionally `sh etc/bootstrap-macos.sh`
 - **Linux and BSD:** Ensure you have `git` and `zsh` installed.
 - **MacOS terminal:** `terminal/monokai_pro_spectrum.terminal` (Settings -> Profiles -> Press "gear" -> Import).
-- **Git:** Don't forget to adjust `home/.gitconfig` or you'll have improper commit author
+- **Git:** Don't forget to adjust `home/.gitconfig.local` or you'll have improper commit author
 
 ## Features
 

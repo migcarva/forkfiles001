@@ -1,11 +1,10 @@
 #!/usr/bin/env zsh
 
-curr="$pm/dotfiles"
+curr="$dev/home/dotfiles"
 
 # Load main files.
-# echo "Load start\t" $(gdate "+%s-%N")
+echo 'Loading main zsh configs'
 source "$curr/terminal/startup.sh"
-# echo "$curr/terminal/startup.sh"
 source "$curr/terminal/completion.sh"
 source "$curr/terminal/highlight.sh"
 # echo "Load end\t" $(gdate "+%s-%N")
@@ -15,7 +14,7 @@ autoload -U colors && colors
 # Load and execute the prompt theming system.
 fpath=("$curr/terminal" $fpath)
 autoload -Uz promptinit && promptinit
-prompt 'paulmillr'
+prompt 'migcarva'
 
 path=(/usr/local/opt/ruby/bin $HOME/.cargo/bin $path) # changing .zshenv doesn't work
 export GPG_TTY=$(tty) # For git commit signing
@@ -23,10 +22,11 @@ export GPG_TTY=$(tty) # For git commit signing
 # ==================================================================
 # = Aliases =
 # ==================================================================
+
 # Simple clear command.
 alias cl='clear'
 
-# Disable sertificate check for wget.
+# Disable certificate check for wget.
 # alias wget='wget --no-check-certificate'
 
 # Some MacOS-only stuff.
@@ -54,17 +54,19 @@ fi
 # Git short-cuts.
 alias g='git'
 alias ga='git add'
-alias gr='git rm'
-alias gf='git fetch'
-alias gu='git pull'
-alias gs='git status --short'
 alias gd='git diff'
 alias gdisc='git discard'
+alias gr='git rm'
+alias gf='git fetch'
+alias gp='git push'
+alias gs='git status --short'
+alias gu='git pull'
 
 function gc() {
   args=$@
   git commit -m "$args"
 }
+
 function gca() {
   args=$@
   git commit --amend -m "$args"
@@ -96,8 +98,6 @@ function cherry() {
   done
 }
 
-alias gp='git push'
-
 function gcp() {
   title="$@"
   git commit -am $title && git push -u origin
@@ -119,12 +119,6 @@ function gl() {
 # Dev short-cuts.
 # ===============
 
-# Brunch.
-alias bb='brunch build'
-alias bbp='brunch build --production'
-alias bw='brunch w'
-alias bws='brunch w --server'
-
 # Package managers.
 alias nr='npm run'
 alias brewup='brew update && brew upgrade'
@@ -132,11 +126,6 @@ alias jk='jekyll serve --watch' # lol jk
 # alias serve='http-serve' # npm install http-server
 alias serve='python -m SimpleHTTPServer'
 alias server='serve'
-
-# Ruby.
-alias bx='bundle exec'
-alias bex='bundle exec'
-alias migr='bundle exec rake db:migrate'
 
 # $ git log --no-merges --pretty=format:"%ae" | stats
 # # => 514 a@example.com

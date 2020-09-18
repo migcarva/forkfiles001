@@ -38,9 +38,7 @@ typeset -gU cdpath fpath mailpath manpath path
 typeset -gUT INFOPATH infopath
 
 # Commonly used directories.
-dev="$HOME/Developer"
-com="$dev/com"
-pm="$dev/personal"
+dev="$HOME/Code"
 as="$HOME/Library/Application Support"
 
 # Set the the list of directories that cd searches.

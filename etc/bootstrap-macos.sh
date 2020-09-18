@@ -2,12 +2,12 @@
 
 # A simple script for setting up macOS dev environment.
 
-dev="$HOME/Developer"
+dev="$HOME/Code"
 pushd .
 mkdir -p $dev
 cd $dev
 
-echo 'Enter new hostname of the machine (e.g. macbook-paulmillr)'
+echo 'Enter new hostname of the machine (e.g. oaklab-2020)'
   read hostname
   echo "Setting new hostname to $hostname..."
   scutil --set HostName "$hostname"
@@ -16,13 +16,19 @@ echo 'Enter new hostname of the machine (e.g. macbook-paulmillr)'
   scutil --set ComputerName "$compname"
   sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$compname"
 
-pub=$HOME/.ssh/id_ed25519.pub
+pub=$HOME/.ssh/id.pub
 echo 'Checking for SSH key, generating one if it does not exist...'
   [[ -f $pub ]] || ssh-keygen -t ed25519
 
 echo 'Copying public key to clipboard. Paste it into your Github account...'
   [[ -f $pub ]] && cat $pub | pbcopy
   open 'https://github.com/account/ssh'
+
+echo 'Creating GPG key'
+  gpg --full-generate-key
+
+echo 'Listing publig gpg key to clipboard'
+  gpg --list-secret-keys --keyid-format LONG
 
 # If we on macOS, install homebrew and tweak system a bit.
 if [[ `uname` == 'Darwin' ]]; then
@@ -33,32 +39,14 @@ if [[ `uname` == 'Darwin' ]]; then
   fi
 
   # Homebrew packages.
-  brew install diff-so-fancy gnupg htop node pbzip2 python python@2 ruby postgresql wget
-  # echo 'Tweaking macOS...'
-    # source 'etc/macos.sh'
+  brew npm nvm yarn install git coreutils openssl libyaml readline unzio curl shellcheck watchman tmux reattach-to-user-namespace ffmpeg docker diff-so-fancy 
 
-  # https://github.com/sindresorhus/quick-look-plugins
-  # echo 'Installing Quick Look plugins...'
-  #   brew tap phinze/homebrew-cask
-  #   brew install caskroom/cask/brew-cask
-  #   brew cask install suspicious-package quicklook-json qlmarkdown qlstephen qlcolorcode
+  # Homebrew cask package
+  brew cask install spectacle spotify 1password kap visual-studio-code postman docker google-chrome safari-technology-preview telegram microsoft-teams figma
+
+  echo 'Tweaking macOS...'
+    source 'etc/macos-settings.sh'
 fi
 
 echo 'Symlinking config files...'
   source 'etc/symlink-dotfiles.sh'
-
-echo 'Applying sublime config...'
-  st=$(pwd)/sublime/packages
-  as="$HOME/Library/Application Support/Sublime Text 3/Packages"
-  asprefs="$as/User/Preferences.sublime-settings"
-  if [[ -d "$as" ]]; then
-    for theme in $st/Theme*; do
-      cp -r $theme $as
-    done
-    rm $asprefs
-    cp -r $st/pm-themes $as
-  else
-    echo "Install Sublime Text https://www.sublimetext.com"
-  fi
-
-popd

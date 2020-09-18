@@ -1,6 +1,7 @@
 #!/bin/sh
 
-[ "${SHELL##/*/}" != "zsh" ] && echo 'You might need to change default shell to zsh: `chsh -s /bin/zsh`'
+[ "${SHELL##/*/}" != "zsh" ]
+echo 'You might need to change default shell to zsh: `chsh -s /bin/zsh`'
 
 dir="$HOME/Code/home"
 mkdir -p $dir
